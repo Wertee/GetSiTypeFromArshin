@@ -8,8 +8,8 @@ namespace GetSiTypeFromArshin
 {
     public class NomerGosReestra
     {
-        public string Num { get; set; }
-        public string Name { get; set; }
-        public string TypeSi { get; set; }
+        public string? Num { get; set; }
+        public string? Name { get; set; }
+        public string? TypeSi { get; set; }
     }
 }
