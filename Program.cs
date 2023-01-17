@@ -8,22 +8,23 @@ namespace GetSiTypeFromArshin
     internal class Program
     {
         public static Root root { get; set; }
-        public static List<NomerGosReestra> nomera { get; set; } = new List<NomerGosReestra>();
+        public static List<DataToExcel> nomera { get; set; } = new List<DataToExcel>();
         static void Main(string[] args)
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            for (int i = 1; i <= 50; i++)
+            for (int i = 51; i <= 100; i++)
             {
+                Console.WriteLine("Iteration " + i);
                 Task downloadTask = GetDataAsync(i);
                 Task.WaitAll(downloadTask);
 
                 var items = root.result.items;
                 foreach (var item in items)
                 {
-                    nomera.Add(new NomerGosReestra
+                    nomera.Add(new DataToExcel()
                     {
-                        Num = item.properties.Where(x=>x.title == "Номер в госреестре").Select(x=>x.value?.ToString()).FirstOrDefault(),
+                        Num = item.properties.Where(x => x.title == "Номер в госреестре").Select(x => x.value?.ToString()).FirstOrDefault(),
                         Name = item.properties.Where(x => x.title == "Наименование СИ").Select(x => x.value?.ToString()).FirstOrDefault(),
                         TypeSi = item.properties.Where(x => x.title == "Обозначение типа СИ").Select(x => x.value?.ToString()).FirstOrDefault()
                     });
