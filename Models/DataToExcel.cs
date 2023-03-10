@@ -1,9 +1,11 @@
 ﻿namespace GetSiTypeFromArshin.Models
 {
-    public class DataToExcel
+    public record DataToExcel
     {
-        public string? Num { get; set; }
+        public string? Number { get; set; }
         public string? Name { get; set; }
         public string? TypeSi { get; set; }
+        public string? Manufacturer { get; set; }
+        public string? CheckPeriod { get; set; }
     }
 }

@@ -1,38 +1,51 @@
 ﻿using GetSiTypeFromArshin.Models;
+using GetSiTypeFromArshin.Services.Data;
 using GetSiTypeFromArshin.Services.Excel;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace GetSiTypeFromArshin
 {
     internal class Program
     {
-        public static Root root { get; set; }
-        public static List<DataToExcel> nomera { get; set; } = new List<DataToExcel>();
-        static void Main(string[] args)
+        public static List<DataToExcel> numbers { get; set; } = new();
+        static async Task Main(string[] args)
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            for (int i = 51; i <= 100; i++)
-            {
-                Console.WriteLine("Iteration " + i);
-                Task downloadTask = GetDataAsync(i);
-                Task.WaitAll(downloadTask);
 
+            var totalPages = await DataService.GetCountOfPages();
+
+            for (int i = 1; i <= totalPages; i++)
+            {
+                Console.WriteLine($"Iteration {i} of {totalPages}");
+                var root = await DataService.GetData(i);
+                if (root == null)
+                {
+                    Console.WriteLine("Root is null");
+                    break;
+                }
                 var items = root.result.items;
+
                 foreach (var item in items)
                 {
-                    nomera.Add(new DataToExcel()
+                    var n = item.properties.Where(x => x.title == "Номер в госреестре")
+                        .Select(x => x.value?.ToString())
+                        .FirstOrDefault();
+                    if (n.Equals("3-40"))
+                        Console.WriteLine("1");
+                    numbers.Add(new DataToExcel()
                     {
-                        Num = item.properties.Where(x => x.title == "Номер в госреестре").Select(x => x.value?.ToString()).FirstOrDefault(),
+                        Number = item.properties.Where(x => x.title == "Номер в госреестре").Select(x => x.value?.ToString()).FirstOrDefault(),
                         Name = item.properties.Where(x => x.title == "Наименование СИ").Select(x => x.value?.ToString()).FirstOrDefault(),
-                        TypeSi = item.properties.Where(x => x.title == "Обозначение типа СИ").Select(x => x.value?.ToString()).FirstOrDefault()
+                        TypeSi = item.properties.Where(x => x.title == "Обозначение типа СИ").Select(x => x.value?.ToString()).FirstOrDefault()?.Replace("[", "").Replace("]", ""),
+                        Manufacturer = item.properties.Where(x => x.title == "Изготовитель").Select(x => x.value?.ToString()).FirstOrDefault(),
+                        CheckPeriod = item.properties.Where(x => x.title == "МПИ").Select(x => x.value?.ToString()).FirstOrDefault()
                     });
                 }
             }
 
             CreateExcelFileService createExcel = new();
-            createExcel.CreateExcelFile(nomera);
+            createExcel.CreateExcelFile(numbers);
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
@@ -40,31 +53,7 @@ namespace GetSiTypeFromArshin
             ts.Hours, ts.Minutes, ts.Seconds,
             ts.Milliseconds / 10);
             Console.WriteLine("Working time: " + elapsedTime);
-            //foreach (var nomer in nomera)
-            //{
-            //    Console.WriteLine($"Номер:{nomer.Num} Обозначение:{nomer.Name} Тип СИ:{nomer.TypeSi}");
-            //}
 
-        }
-
-        static async Task GetDataAsync(int pagenum)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var reqUri = $"https://fgis.gost.ru/fundmetrology/api/registry/4/data?pageNumber={pagenum.ToString()}&pageSize=1000&orgID=CURRENT_ORG";
-                var responce = await httpClient.GetAsync(reqUri);
-                var responceStr = responce.Content.ReadAsStringAsync().Result;
-                try
-                {
-                    root = JsonConvert.DeserializeObject<Root>(responceStr);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
-
-            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace GetSiTypeFromArshin.Services.Excel
         public void CreateExcelFile(List<DataToExcel> numbers)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(@"D:\Test2.xlsx"))
+            using (var package = new ExcelPackage(@"D:\Gosreestr.xlsx"))
             {
                 Console.WriteLine("Creating Excel file");
                 var sheet = package.Workbook.Worksheets.Add("Nomera");
@@ -21,12 +21,16 @@ namespace GetSiTypeFromArshin.Services.Excel
                 sheet.Cells[1, 1].Value = "Номер гос рееста";
                 sheet.Cells[1, 2].Value = "Наименование типа СИ";
                 sheet.Cells[1, 3].Value = "Тип СИ";
+                sheet.Cells[1, 4].Value = "Производитель";
+                sheet.Cells[1, 5].Value = "МПИ";
 
-                for (int i = 2; i < numbers.Count; i++)
+                for (int i = 0; i < numbers.Count; i++)
                 {
-                    sheet.Cells[i, 1].Value = numbers[i - 2].Num;
-                    sheet.Cells[i, 2].Value = numbers[i - 2].Name;
-                    sheet.Cells[i, 3].Value = numbers[i - 2].TypeSi;
+                    sheet.Cells[i + 2, 1].Value = numbers[i].Number;
+                    sheet.Cells[i + 2, 2].Value = numbers[i].Name;
+                    sheet.Cells[i + 2, 3].Value = numbers[i].TypeSi;
+                    sheet.Cells[i + 2, 4].Value = numbers[i].Manufacturer;
+                    sheet.Cells[i + 2, 5].Value = numbers[i].CheckPeriod;
                 }
 
 
