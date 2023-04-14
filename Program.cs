@@ -28,11 +28,6 @@ namespace GetSiTypeFromArshin
 
                 foreach (var item in items)
                 {
-                    var n = item.properties.Where(x => x.title == "Номер в госреестре")
-                        .Select(x => x.value?.ToString())
-                        .FirstOrDefault();
-                    if (n.Equals("3-40"))
-                        Console.WriteLine("1");
                     numbers.Add(new DataToExcel()
                     {
                         Number = item.properties.Where(x => x.title == "Номер в госреестре").Select(x => x.value?.ToString()).FirstOrDefault(),
