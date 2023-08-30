@@ -1,12 +1,7 @@
 ﻿using GetSiTypeFromArshin.Models.ApiModels;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GetSiTypeFromArshin.Services.Data
+namespace GetSiTypeFromArshin.Services.SiService.Data
 {
     public class DataService
     {

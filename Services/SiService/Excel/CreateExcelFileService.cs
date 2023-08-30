@@ -1,19 +1,14 @@
-﻿using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GetSiTypeFromArshin.Models;
+﻿using GetSiTypeFromArshin.Models;
+using OfficeOpenXml;
 
-namespace GetSiTypeFromArshin.Services.Excel
+namespace GetSiTypeFromArshin.Services.SiService.Excel
 {
     public class CreateExcelFileService
     {
         public void CreateExcelFile(List<DataToExcel> numbers)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(@"D:\Gosreestr.xlsx"))
+            using (var package = new ExcelPackage(@"F:\Gosreestr.xlsx"))
             {
                 Console.WriteLine("Creating Excel file");
                 var sheet = package.Workbook.Worksheets.Add("Nomera");
