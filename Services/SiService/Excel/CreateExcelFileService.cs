@@ -5,7 +5,7 @@ namespace GetSiTypeFromArshin.Services.SiService.Excel
 {
     public class CreateExcelFileService
     {
-        public void CreateExcelFile(List<DataToExcel> numbers)
+        public void CreateExcelFile(List<TypesDataToExcel> numbers)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(@"F:\Gosreestr.xlsx"))

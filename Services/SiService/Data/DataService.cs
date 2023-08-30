@@ -1,4 +1,4 @@
-﻿using GetSiTypeFromArshin.Models.ApiModels;
+﻿using GetSiTypeFromArshin.Models.ApiModels.SiTypes;
 using Newtonsoft.Json;
 
 namespace GetSiTypeFromArshin.Services.SiService.Data

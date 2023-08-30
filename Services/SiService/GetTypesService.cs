@@ -7,7 +7,7 @@ namespace GetSiTypeFromArshin.Services.SiService;
 
 public class GetTypesService
 {
-    public static List<DataToExcel> numbers { get; set; } = new();
+    public static List<TypesDataToExcel> numbers { get; set; } = new();
 
     public async Task<bool> GetTypes()
     {
@@ -30,7 +30,7 @@ public class GetTypesService
 
             foreach (var item in items)
             {
-                numbers.Add(new DataToExcel()
+                numbers.Add(new TypesDataToExcel()
                 {
                     Number = item.properties.Where(x => x.title == "Номер в госреестре")
                         .Select(x => x.value?.ToString()).FirstOrDefault(),
