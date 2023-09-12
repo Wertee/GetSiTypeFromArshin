@@ -1,11 +1,14 @@
-﻿using GetSiTypeFromArshin.Models;
+﻿using System.ComponentModel;
+using GetSiTypeFromArshin.Models;
+using GetSiTypeFromArshin.Models.Types;
 using OfficeOpenXml;
+using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace GetSiTypeFromArshin.Services.SiService.Excel
 {
-    public class CreateExcelFileService
+    public class CreateSiExcelFileService
     {
-        public void CreateExcelFile(List<TypesDataToExcel> numbers)
+        public void CreateExcelFile(List<TypesDataToExcelModel> numbers)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(@"F:\Gosreestr.xlsx"))

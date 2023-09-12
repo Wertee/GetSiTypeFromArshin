@@ -1,6 +1,6 @@
-﻿namespace GetSiTypeFromArshin.Models
+﻿namespace GetSiTypeFromArshin.Models.Types
 {
-    public record TypesDataToExcel
+    public record TypesDataToExcelModel
     {
         public string? Number { get; set; }
         public string? Name { get; set; }

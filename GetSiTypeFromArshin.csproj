@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Etalons\" />
     <Folder Include="Services\Data\" />
     <Folder Include="Services\EtalonService\" />
     <Folder Include="Services\Excel\" />

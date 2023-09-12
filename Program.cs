@@ -1,8 +1,4 @@
-﻿using GetSiTypeFromArshin.Models;
-using System.Diagnostics;
-using GetSiTypeFromArshin.Services.SiService;
-using GetSiTypeFromArshin.Services.SiService.Data;
-using GetSiTypeFromArshin.Services.SiService.Excel;
+﻿using GetSiTypeFromArshin.Services.SiService;
 
 namespace GetSiTypeFromArshin
 {
@@ -11,7 +7,8 @@ namespace GetSiTypeFromArshin
         static async Task Main(string[] args)
         {
             GetTypesService typesService = new GetTypesService();
-            await typesService.GetTypes();
+            var result = await typesService.GetTypes();
+            Console.WriteLine("Выгрузка номеров госреестра успешно завершена");
         }
     }
 }

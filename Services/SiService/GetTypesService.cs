@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using GetSiTypeFromArshin.Models;
+using GetSiTypeFromArshin.Models.Types;
 using GetSiTypeFromArshin.Services.SiService.Data;
 using GetSiTypeFromArshin.Services.SiService.Excel;
 
@@ -7,7 +7,7 @@ namespace GetSiTypeFromArshin.Services.SiService;
 
 public class GetTypesService
 {
-    public static List<TypesDataToExcel> numbers { get; set; } = new();
+    public static List<TypesDataToExcelModel> numbers { get; set; } = new();
 
     public async Task<bool> GetTypes()
     {
@@ -30,7 +30,7 @@ public class GetTypesService
 
             foreach (var item in items)
             {
-                numbers.Add(new TypesDataToExcel()
+                numbers.Add(new TypesDataToExcelModel()
                 {
                     Number = item.properties.Where(x => x.title == "Номер в госреестре")
                         .Select(x => x.value?.ToString()).FirstOrDefault(),
@@ -51,11 +51,12 @@ public class GetTypesService
 
         try
         {
-            CreateExcelFileService createExcel = new();
-            createExcel.CreateExcelFile(numbers);
+            CreateSiExcelFileService createSiExcel = new();
+            createSiExcel.CreateExcelFile(numbers);
         }
         catch (Exception exception)
         {
+            Console.WriteLine("Выполнение завершилось с исключением" + exception.Message);
             return false;
         }
         
