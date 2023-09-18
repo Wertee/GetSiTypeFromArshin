@@ -1,9 +1,9 @@
-﻿using GetSiTypeFromArshin.Models.ApiModels.SiTypes;
+﻿using GetSiTypeFromArshin.Models.ApiModels.SiTypes.ResponceTypes;
 using Newtonsoft.Json;
 
-namespace GetSiTypeFromArshin.Services.SiService.Data
+namespace GetSiTypeFromArshin.Services.SiService.Connection
 {
-    public class DataService
+    public class APIConnectionService
     {
         private static async Task<string> GetResponseFromApi(string uri)
         {

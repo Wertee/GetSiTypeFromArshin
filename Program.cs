@@ -7,8 +7,10 @@ namespace GetSiTypeFromArshin
         static async Task Main(string[] args)
         {
             GetTypesService typesService = new GetTypesService();
+
             var result = await typesService.GetTypes();
-            Console.WriteLine("Выгрузка номеров госреестра успешно завершена");
+            if (result)
+                Console.WriteLine("Выгрузка номеров госреестра успешно завершена");
         }
     }
 }

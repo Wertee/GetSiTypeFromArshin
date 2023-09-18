@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using GetSiTypeFromArshin.Models;
-using GetSiTypeFromArshin.Models.Types;
+using GetSiTypeFromArshin.Models.ApiModels.SiTypes.ExcelTypes;
 using OfficeOpenXml;
 using LicenseContext = OfficeOpenXml.LicenseContext;
 

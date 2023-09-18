@@ -1,4 +1,4 @@
-﻿namespace GetSiTypeFromArshin.Models.ApiModels.SiTypes
+﻿namespace GetSiTypeFromArshin.Models.ApiModels.SiTypes.ResponceTypes
 {
     public class Item
     {

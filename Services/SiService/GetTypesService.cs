@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using GetSiTypeFromArshin.Models.Types;
-using GetSiTypeFromArshin.Services.SiService.Data;
+using GetSiTypeFromArshin.Models.ApiModels.SiTypes.ExcelTypes;
+using GetSiTypeFromArshin.Services.SiService.Connection;
 using GetSiTypeFromArshin.Services.SiService.Excel;
 
 namespace GetSiTypeFromArshin.Services.SiService;
@@ -14,12 +14,12 @@ public class GetTypesService
         Stopwatch stopWatch = new Stopwatch();
         stopWatch.Start();
 
-        var totalPages = await DataService.GetCountOfPages();
+        var totalPages = await APIConnectionService.GetCountOfPages();
 
         for (int i = 1; i <= totalPages; i++)
         {
             Console.WriteLine($"Iteration {i} of {totalPages}");
-            var root = await DataService.GetData(i);
+            var root = await APIConnectionService.GetData(i);
             if (root == null)
             {
                 Console.WriteLine("Root is null");

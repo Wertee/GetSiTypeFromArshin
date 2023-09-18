@@ -1,4 +1,4 @@
-﻿namespace GetSiTypeFromArshin.Models.Types
+﻿namespace GetSiTypeFromArshin.Models.ApiModels.SiTypes.ExcelTypes
 {
     public record TypesDataToExcelModel
     {
