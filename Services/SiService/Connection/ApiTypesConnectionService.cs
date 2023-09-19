@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GetSiTypeFromArshin.Services.SiService.Connection
 {
-    public class APIConnectionService
+    public class ApiTypesConnectionService
     {
         private static async Task<string> GetResponseFromApi(string uri)
         {

@@ -14,8 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Models\ApiModels\Etalons\ExcelEtalon\" />
-    <Folder Include="Models\ApiModels\Etalons\ResponceEtalon\" />
-    <Folder Include="Services\EtalonService\Connection\" />
     <Folder Include="Services\EtalonService\Excel\" />
   </ItemGroup>
 

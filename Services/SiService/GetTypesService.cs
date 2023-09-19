@@ -14,12 +14,12 @@ public class GetTypesService
         Stopwatch stopWatch = new Stopwatch();
         stopWatch.Start();
 
-        var totalPages = await APIConnectionService.GetCountOfPages();
+        var totalPages = await ApiTypesConnectionService.GetCountOfPages();
 
         for (int i = 1; i <= totalPages; i++)
         {
             Console.WriteLine($"Iteration {i} of {totalPages}");
-            var root = await APIConnectionService.GetData(i);
+            var root = await ApiTypesConnectionService.GetData(i);
             if (root == null)
             {
                 Console.WriteLine("Root is null");
