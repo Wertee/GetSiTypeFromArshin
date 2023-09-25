@@ -1,4 +1,5 @@
-﻿using GetSiTypeFromArshin.Services.SiService;
+﻿using GetSiTypeFromArshin.Services.EtalonService;
+using GetSiTypeFromArshin.Services.SiService;
 
 namespace GetSiTypeFromArshin
 {
@@ -14,10 +15,10 @@ namespace GetSiTypeFromArshin
             switch (data)
             {
                 case "1":
-                    GetTypes();
+                    await GetTypes();
                     break;
                 case "2":
-                    GetEtalons();
+                    await GetEtalons();
                     break;
                 default:
                     Console.WriteLine("Вы ввели некорректное значение");
@@ -25,7 +26,7 @@ namespace GetSiTypeFromArshin
             }
         }
 
-        static async void GetTypes()
+        static async Task GetTypes()
         {
             GetTypesService typesService = new GetTypesService();
 
@@ -34,8 +35,12 @@ namespace GetSiTypeFromArshin
                 Console.WriteLine("Выгрузка номеров госреестра успешно завершена");
         }
 
-        static void GetEtalons()
+        static async Task GetEtalons()
         {
+            GetEtalonsService etalonsService = new GetEtalonsService();
+            var result = await etalonsService.GetEtalons();
+            if(result)
+                Console.WriteLine("Выгрузка успешно завершена");
             
         }
     }

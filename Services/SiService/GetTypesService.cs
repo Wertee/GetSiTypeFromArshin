@@ -51,8 +51,8 @@ public class GetTypesService
 
         try
         {
-            CreateSiExcelFileService createSiExcel = new();
-            createSiExcel.CreateExcelFile(numbers);
+            CreateTypesExcelFileService createTypesExcel = new();
+            createTypesExcel.CreateExcelFile(numbers);
         }
         catch (Exception exception)
         {

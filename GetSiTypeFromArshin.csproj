@@ -12,9 +12,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+
   <ItemGroup>
     <Folder Include="Models\ApiModels\Etalons\ExcelEtalon\" />
-    <Folder Include="Services\EtalonService\Excel\" />
   </ItemGroup>
 
 </Project>

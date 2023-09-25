@@ -6,12 +6,12 @@ using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace GetSiTypeFromArshin.Services.SiService.Excel
 {
-    public class CreateSiExcelFileService
+    public class CreateTypesExcelFileService
     {
         public void CreateExcelFile(List<TypesDataToExcelModel> numbers)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(@"F:\Gosreestr.xlsx"))
+            using (var package = new ExcelPackage(@"D:\Gosreestr.xlsx"))
             {
                 Console.WriteLine("Creating Excel file");
                 var sheet = package.Workbook.Worksheets.Add("Nomera");
@@ -21,14 +21,17 @@ namespace GetSiTypeFromArshin.Services.SiService.Excel
                 sheet.Cells[1, 3].Value = "Тип СИ";
                 sheet.Cells[1, 4].Value = "Производитель";
                 sheet.Cells[1, 5].Value = "МПИ";
-
-                for (int i = 0; i < numbers.Count; i++)
+                
+                int currentRow = 2;
+                foreach (var number in numbers)
                 {
-                    sheet.Cells[i + 2, 1].Value = numbers[i].Number;
-                    sheet.Cells[i + 2, 2].Value = numbers[i].Name;
-                    sheet.Cells[i + 2, 3].Value = numbers[i].TypeSi;
-                    sheet.Cells[i + 2, 4].Value = numbers[i].Manufacturer;
-                    sheet.Cells[i + 2, 5].Value = numbers[i].CheckPeriod;
+                    sheet.Cells[currentRow, 1].Value = number.Number;
+                    sheet.Cells[currentRow, 2].Value = number.Name;
+                    sheet.Cells[currentRow, 3].Value = number.TypeSi;
+                    sheet.Cells[currentRow, 4].Value = number.Manufacturer;
+                    sheet.Cells[currentRow, 5].Value = number.CheckPeriod;
+
+                    currentRow++;
                 }
 
 
