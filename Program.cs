@@ -1,4 +1,5 @@
 ﻿using GetSiTypeFromArshin.Services.EtalonService;
+using GetSiTypeFromArshin.Services.EtalonService.Excel;
 using GetSiTypeFromArshin.Services.SiService;
 
 namespace GetSiTypeFromArshin
@@ -37,7 +38,19 @@ namespace GetSiTypeFromArshin
 
         static async Task GetEtalons()
         {
-            GetEtalonsService etalonsService = new GetEtalonsService();
+            Console.Clear();
+            Console.Write("Укажите путь до файла:");
+            string? path = Console.ReadLine();
+            
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            {
+                Console.WriteLine("Вы не указали путь до файла");
+                GetEtalons();
+            }
+
+            var etExService = new GetEtalonExcelFileService(path);
+            var ids = etExService.GetEtalonsId();
+            GetEtalonsService etalonsService = new GetEtalonsService(ids);
             var result = await etalonsService.GetEtalons();
             if(result)
                 Console.WriteLine("Выгрузка успешно завершена");

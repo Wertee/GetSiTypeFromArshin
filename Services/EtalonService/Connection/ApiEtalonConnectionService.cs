@@ -23,19 +23,38 @@ public class ApiEtalonConnectionService
             
         }
     }
-
-    public static async Task<Root?> GetData()
+    
+    public static async Task<List<Result?>> GetData(List<int> ids)
     {
+        List<Result> rootList = new();
+        string response = "";
         try
         {
-            var response = await GetResponseFromApi(
-                "https://fgis.gost.ru/fundmetrology/cm/icdb/mieta/select?fq=mitype_num:*29219%5C-05*&fq=factory_num:*060501*&q=*&fl=rmieta_id,number,organization,mitype_num,mitype,minotation,modification,factory_num,year,npenumber,rankcode,verification_date,applicability&sort=verification_date+desc&rows=20&start=0");
-            var root = JsonConvert.DeserializeObject<Root?>(response);
-            return root;
+            for (int i = 0; i < ids.Count; i++)
+            {
+                Thread.Sleep(500);
+                try
+                {
+                    response = await GetResponseFromApi($"https://fgis.gost.ru/fundmetrology/eapi/mieta/{ids[i]}");
+                    var root = JsonConvert.DeserializeObject<Root?>(response);
+                    Console.WriteLine($"Iteration {i}");
+                    if(root.result == null)
+                        rootList.Add(new Result(){number = ids[i].ToString()});
+                    else
+                        rootList.Add(root.result);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                
+            }
+            return rootList;
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            Console.WriteLine(response);
             return null;
         }
     }
