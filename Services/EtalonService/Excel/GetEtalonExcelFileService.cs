@@ -1,4 +1,4 @@
-using ClosedXML.Excel;
+using OfficeOpenXml;
 
 namespace GetSiTypeFromArshin.Services.EtalonService.Excel;
 
@@ -22,11 +22,14 @@ public class GetEtalonExcelFileService
     public List<int> GetEtalonsId()
     {
         List<int> ids = new();
-        using var workBook = new XLWorkbook(_filePath);
-        var rows = workBook.Worksheet(1).RangeUsed().RowsUsed().Skip(1);
-        foreach (var row in rows)
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        FileInfo fileInfo = new FileInfo(_filePath);
+        ExcelPackage package = new ExcelPackage(fileInfo);
+        var worksheet = package.Workbook.Worksheets.FirstOrDefault();
+        var rows = worksheet.Dimension.Rows;
+        for (int i = 2;i <= rows;i++)
         {
-            var id = ParceId(row.Cell(1).GetString());
+            var id = ParceId(worksheet.Cells[i,1].Value.ToString());
             ids.Add(id);
         }
 

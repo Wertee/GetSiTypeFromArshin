@@ -1,3 +1,4 @@
+using System.Globalization;
 using GetSiTypeFromArshin.Models.ApiModels.Etalons.ResponceEtalon;
 using OfficeOpenXml;
 
@@ -7,9 +8,18 @@ public class CreateEtalonExcelFileService
 {
     public static void CreateExcelFile(List<Result> etalons)
     {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        using (var package = new ExcelPackage(@"D:\Etalons.xlsx"))
+        string unloadDisk = "";
+        var directory = new DirectoryInfo($@"{unloadDisk}:\");
+        while (!directory.Exists)
         {
+            Console.WriteLine("Введите букву диска, куда выгружаем файл с эталонами");
+            unloadDisk = Console.ReadLine();
+            directory = new DirectoryInfo($@"{unloadDisk}:\");
+        }
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage($@"{unloadDisk}:\Etalons {DateTime.Now:dd_MM_yyyy_HH_mm_ss}.xlsx"))
+        {
+            Console.WriteLine("Создаем excel файл");
             var sheet = package.Workbook.Worksheets.Add("Etalons");
             sheet.Cells[1, 1].Value = "Регистрационный номер эталона";
             sheet.Cells[1, 2].Value = "Заводской номер";

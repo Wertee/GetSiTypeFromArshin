@@ -18,11 +18,11 @@ public class GetTypesService
 
         for (int i = 1; i <= totalPages; i++)
         {
-            Console.WriteLine($"Iteration {i} of {totalPages}");
+            Console.WriteLine($"№ {i} из {totalPages}");
             var root = await ApiTypesConnectionService.GetData(i);
             if (root == null)
             {
-                Console.WriteLine("Root is null");
+                Console.WriteLine("Ошибка получения данных");
                 break;
             }
 
@@ -66,7 +66,7 @@ public class GetTypesService
         string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             ts.Hours, ts.Minutes, ts.Seconds,
             ts.Milliseconds / 10);
-        Console.WriteLine("Working time: " + elapsedTime);
+        Console.WriteLine("Время работы: " + elapsedTime);
 
         return true;
     }

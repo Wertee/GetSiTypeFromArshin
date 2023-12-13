@@ -25,6 +25,9 @@ namespace GetSiTypeFromArshin
                     Console.WriteLine("Вы ввели некорректное значение");
                     break;
             }
+
+            Console.WriteLine("Для закрытия программы нажмити любую клавишу");
+            Console.ReadKey();
         }
 
         static async Task GetTypes()

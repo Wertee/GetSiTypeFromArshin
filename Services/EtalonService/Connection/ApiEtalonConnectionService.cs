@@ -37,7 +37,7 @@ public class ApiEtalonConnectionService
                 {
                     response = await GetResponseFromApi($"https://fgis.gost.ru/fundmetrology/eapi/mieta/{ids[i]}");
                     var root = JsonConvert.DeserializeObject<Root?>(response);
-                    Console.WriteLine($"Iteration {i}");
+                    Console.WriteLine($"№ {i+1} из {ids.Count}");
                     if(root.result == null)
                         rootList.Add(new Result(){number = ids[i].ToString()});
                     else

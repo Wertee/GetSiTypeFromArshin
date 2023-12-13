@@ -10,10 +10,18 @@ namespace GetSiTypeFromArshin.Services.SiService.Excel
     {
         public void CreateExcelFile(List<TypesDataToExcelModel> numbers)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(@"D:\Gosreestr.xlsx"))
+            string unloadDisk = "";
+            var directory = new DirectoryInfo($@"{unloadDisk}:\");
+            while (!directory.Exists)
             {
-                Console.WriteLine("Creating Excel file");
+                Console.WriteLine("Введите букву диска, куда выгружаем файл с номерами госреестра");
+                unloadDisk = Console.ReadLine();
+                directory = new DirectoryInfo($@"{unloadDisk}:\");
+            }
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage($@"{unloadDisk}:\Gosreestr {DateTime.Now:dd_MM_yyyy_HH_mm_ss}.xlsx"))
+            {
+                Console.WriteLine("Создаем excel файл");
                 var sheet = package.Workbook.Worksheets.Add("Nomera");
 
                 sheet.Cells[1, 1].Value = "Номер гос рееста";
