@@ -1,4 +1,3 @@
-using System.Globalization;
 using GetSiTypeFromArshin.Models.ApiModels.Etalons.ResponceEtalon;
 using OfficeOpenXml;
 
@@ -44,6 +43,43 @@ public class CreateEtalonExcelFileService
                 catch (Exception e)
                 {
                     sheet.Cells[currentRow, 1].Value = etalonDataToExcelModel.number;
+                }
+                finally
+                {
+                    currentRow++;
+                }
+            }
+            package.Save();
+        }
+    }
+
+    public static void CreateExcelFileNotFound(List<string> etalons)
+    {
+        string unloadDisk = "";
+        var directory = new DirectoryInfo($@"{unloadDisk}:\");
+        while (!directory.Exists)
+        {
+            Console.WriteLine("Введите букву диска, куда выгружаем файл с ненайденными эталонами");
+            unloadDisk = Console.ReadLine();
+            directory = new DirectoryInfo($@"{unloadDisk}:\");
+        }
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage($@"{unloadDisk}:\Etalons not found {DateTime.Now:dd_MM_yyyy_HH_mm_ss}.xlsx"))
+        {
+            Console.WriteLine("Создаем excel файл");
+            var sheet = package.Workbook.Worksheets.Add("Etalons");
+            sheet.Cells[1, 1].Value = "Регистрационный номер эталона";
+
+            int currentRow = 2;
+            foreach (var etalon in etalons)
+            {
+                try
+                {
+                    sheet.Cells[currentRow, 1].Value = etalon;
+                }
+                catch (Exception e)
+                {
+                    sheet.Cells[currentRow, 1].Value = etalon;
                 }
                 finally
                 {

@@ -6,10 +6,10 @@ namespace GetSiTypeFromArshin.Services.EtalonService;
 
 public class GetEtalonsService
 {
-    private readonly List<int> _ids; 
-    public GetEtalonsService(List<int> ids)
+    private readonly List<string> _regNumbers; 
+    public GetEtalonsService(List<string> regNumbers)
     {
-        _ids = ids;
+        _regNumbers = regNumbers;
     }
     
     public async Task<bool> GetEtalons()
@@ -19,7 +19,9 @@ public class GetEtalonsService
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             
-            var etalons = await ApiEtalonConnectionService.GetData(_ids);
+            //В GetData нужно передавать найденные ID на сайте аршина.
+            List<int> ids = await ApiEtalonConnectionService.GetIds(_regNumbers);
+            var etalons = await ApiEtalonConnectionService.GetData(ids);
             CreateEtalonExcelFileService.CreateExcelFile(etalons);
             
             

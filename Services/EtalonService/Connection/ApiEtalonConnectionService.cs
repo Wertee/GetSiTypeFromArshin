@@ -1,4 +1,5 @@
 using GetSiTypeFromArshin.Models.ApiModels.Etalons.ResponceEtalon;
+using GetSiTypeFromArshin.Services.EtalonService.Excel;
 using Newtonsoft.Json;
 
 namespace GetSiTypeFromArshin.Services.EtalonService.Connection;
@@ -24,6 +25,8 @@ public class ApiEtalonConnectionService
         }
     }
     
+    
+    
     public static async Task<List<Result?>> GetData(List<int> ids)
     {
         List<Result> rootList = new();
@@ -45,11 +48,49 @@ public class ApiEtalonConnectionService
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine($"Не найденный id {i}");
                     Console.WriteLine(e);
                 }
                 
             }
             return rootList;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Console.WriteLine(response);
+            return null;
+        }
+    }
+
+    public static async Task<List<int>> GetIds(List<string> regNumbers)
+    {
+        List<int> ids = new();
+        List<string> notFoundEtalons = new();
+        string response = "";
+        try
+        {
+            for (int i = 0; i < regNumbers.Count; i++)
+            {
+                Thread.Sleep(500);
+                try
+                {
+                    response = await GetResponseFromApi($"https://fgis.gost.ru/fundmetrology/eapi/mieta?search=*{regNumbers[i]}*");
+                    var root = JsonConvert.DeserializeObject<Models.ApiModels.Etalons.ResponceEtalonId.Root?>(response);
+                    Console.WriteLine($"Ищем эталон по рег.№ {i+1} из {regNumbers.Count}");
+                     if(root.result.count == 0)
+                         notFoundEtalons.Add(regNumbers[i]);
+                     else
+                         ids.Add(int.Parse(root.result.items[0].rmieta_id));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                
+            }
+            CreateEtalonExcelFileService.CreateExcelFileNotFound(notFoundEtalons);
+            return ids;
         }
         catch (Exception e)
         {

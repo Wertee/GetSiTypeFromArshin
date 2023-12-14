@@ -44,16 +44,16 @@ namespace GetSiTypeFromArshin
             Console.Clear();
             Console.Write("Укажите путь до файла:");
             string? path = Console.ReadLine();
-            
-            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            while (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
             {
-                Console.WriteLine("Вы не указали путь до файла");
-                GetEtalons();
+                Console.Write("Укажите путь до файла:");
+                path = Console.ReadLine();
             }
 
+
             var etExService = new GetEtalonExcelFileService(path);
-            var ids = etExService.GetEtalonsId();
-            GetEtalonsService etalonsService = new GetEtalonsService(ids);
+            var regNumbers = etExService.GetEtalonsRegNumbers();
+            GetEtalonsService etalonsService = new GetEtalonsService(regNumbers);
             var result = await etalonsService.GetEtalons();
             if(result)
                 Console.WriteLine("Выгрузка успешно завершена");

@@ -10,18 +10,10 @@ public class GetEtalonExcelFileService
     {
         _filePath = filePath;
     }
-
-    public int ParceId(string regNumber)
-    {
-        var lastIndex = regNumber.LastIndexOf('.');
-        var parsed = string.Join("",regNumber.TakeLast(regNumber.Length - lastIndex - 1)).TrimStart('0');
-        var id = int.Parse(parsed);
-        return id;
-    }
     
-    public List<int> GetEtalonsId()
+    public List<string> GetEtalonsRegNumbers()
     {
-        List<int> ids = new();
+        List<string> regNumbers = new();
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         FileInfo fileInfo = new FileInfo(_filePath);
         ExcelPackage package = new ExcelPackage(fileInfo);
@@ -29,10 +21,10 @@ public class GetEtalonExcelFileService
         var rows = worksheet.Dimension.Rows;
         for (int i = 2;i <= rows;i++)
         {
-            var id = ParceId(worksheet.Cells[i,1].Value.ToString());
-            ids.Add(id);
+            
+            regNumbers.Add(worksheet.Cells[i,1].Value.ToString().Trim());
         }
 
-        return ids;
+        return regNumbers;
     }
 }
