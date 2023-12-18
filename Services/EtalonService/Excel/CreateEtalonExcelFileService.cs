@@ -30,15 +30,15 @@ public class CreateEtalonExcelFileService
             {
                 try
                 {
+                    var lastResultDate = etalonDataToExcelModel.cresults.OrderByDescending(x => DateOnly.Parse(x.verification_date))
+                        .Select(x => x).First();
+                    
                     sheet.Cells[currentRow, 1].Value = etalonDataToExcelModel.number;
                     sheet.Cells[currentRow, 2].Value = etalonDataToExcelModel.factory_num;
                     sheet.Cells[currentRow, 3].Value = DateTime
-                        .Parse(etalonDataToExcelModel.cresults.OrderBy(x => x.valid_date)
-                            .Select(x => x.verification_date).First()).ToShortDateString();
-                    ;
+                        .Parse(lastResultDate.verification_date).ToShortDateString();
                     sheet.Cells[currentRow, 4].Value = DateTime
-                        .Parse(etalonDataToExcelModel.cresults.OrderBy(x => x.valid_date).Select(x => x.valid_date)
-                            .First()).ToShortDateString();
+                        .Parse(lastResultDate.valid_date).ToShortDateString();
                 }
                 catch (Exception e)
                 {
@@ -57,6 +57,10 @@ public class CreateEtalonExcelFileService
     {
         string unloadDisk = "";
         var directory = new DirectoryInfo($@"{unloadDisk}:\");
+        
+        if(etalons.Count ==0)
+            return;
+        
         while (!directory.Exists)
         {
             Console.WriteLine("Введите букву диска, куда выгружаем файл с ненайденными эталонами");

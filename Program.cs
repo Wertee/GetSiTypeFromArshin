@@ -26,7 +26,7 @@ namespace GetSiTypeFromArshin
                     break;
             }
 
-            Console.WriteLine("Для закрытия программы нажмити любую клавишу");
+            Console.WriteLine("Для закрытия программы нажмите любую клавишу");
             Console.ReadKey();
         }
 
