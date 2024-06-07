@@ -40,6 +40,16 @@ namespace GetSiTypeFromArshin
         private static async Task GetFile()
         {
             var totalPages = await ApiTypesConnectionService.GetCountOfPages();
+            
+            Console.Clear();
+            Console.Write("Укажите путь куда сохраняем файлы:");
+            string? path = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(path))
+            {
+                Console.Write("Укажите путь куда сохраняем файлы:");
+                path = Console.ReadLine();
+            }
+            
             for (int i = 1; i <= totalPages; i++)
             {
                 var root = await ApiTypesConnectionService.GetData(i);
@@ -51,18 +61,10 @@ namespace GetSiTypeFromArshin
 
                 var items = root.result.items;
 
-                Console.Clear();
-                Console.Write("Укажите путь куда сохраняем файлы:");
-                string? path = Console.ReadLine();
-                while (string.IsNullOrWhiteSpace(path))
-                {
-                    Console.Write("Укажите путь куда сохраняем файлы:");
-                    path = Console.ReadLine();
-                }
-
                 for (int j = 0; j < items.Count; j++)
                 {
-                    Console.WriteLine("Скачивается файл №" + ++j + " из " + items.Count);
+                    int currentFileNumber = j + 1;
+                    Console.WriteLine("Скачивается файл №" + currentFileNumber + " из " + items.Count);
 
 
                     using (var client = new HttpClient())
