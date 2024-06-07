@@ -52,6 +52,8 @@ namespace GetSiTypeFromArshin
             
             for (int i = 1; i <= totalPages; i++)
             {
+                Console.WriteLine($"Страница № {i} из {totalPages}");
+                
                 var root = await ApiTypesConnectionService.GetData(i);
                 if (root == null)
                 {
