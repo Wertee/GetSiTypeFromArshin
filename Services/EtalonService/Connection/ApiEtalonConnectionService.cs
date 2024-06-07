@@ -24,10 +24,15 @@ public class ApiEtalonConnectionService
             
         }
     }
+
+    public static async Task<List<Result?>> GetEtalons(List<string> regNumbers)
+    {
+        List<int> ids = await ApiEtalonConnectionService.GetIds(regNumbers);
+        var etalons = await ApiEtalonConnectionService.GetData(ids);
+        return etalons;
+    }
     
-    
-    
-    public static async Task<List<Result?>> GetData(List<int> ids)
+    private static async Task<List<Result?>> GetData(List<int> ids)
     {
         List<Result> rootList = new();
         string response = "";
@@ -63,7 +68,7 @@ public class ApiEtalonConnectionService
         }
     }
 
-    public static async Task<List<int>> GetIds(List<string> regNumbers)
+    private static async Task<List<int>> GetIds(List<string> regNumbers)
     {
         List<int> ids = new();
         List<string> notFoundEtalons = new();

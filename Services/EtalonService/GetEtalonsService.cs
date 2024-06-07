@@ -20,11 +20,8 @@ public class GetEtalonsService
             stopWatch.Start();
             
             //В GetData нужно передавать найденные ID на сайте аршина.
-            List<int> ids = await ApiEtalonConnectionService.GetIds(_regNumbers);
-            var etalons = await ApiEtalonConnectionService.GetData(ids);
+            var etalons = await ApiEtalonConnectionService.GetEtalons(_regNumbers);
             CreateEtalonExcelFileService.CreateExcelFile(etalons);
-            
-            
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}.{3:00}",

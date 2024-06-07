@@ -5,7 +5,7 @@ namespace GetSiTypeFromArshin.Services.SiService.Connection
 {
     public class ApiTypesConnectionService
     {
-        private static async Task<string> GetResponseFromApi(string uri)
+        public static async Task<string> GetResponseFromApi(string uri)
         {
             using (var httpClient = new HttpClient())
             {
